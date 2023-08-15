@@ -1,2 +1,3 @@
 ID,Titel,Fase ID,Fase Label,Oorzaak,Impact,Gevolg,Beschrijving,Minimale Extra Reistijd (min.),Maximale Extra Reistijd (min.),Starttijd,Geschatte Eindtijd,Eindtijd,Stationscodes,Stationsnamen,Tijdstip collectie
 6024957,Amsterdam-Haarlem,1b,Gevolgen bekend,Defecte trein,3,,Tussen Amsterdam Centraal en Haarlem is er vertraging en rijden er minder treinen door een defecte trein.,,,2023-08-15T17:42:18,2023-08-15T18:30:00,2023-08-15T18:30:00,,,2023-08-15T17:49:23
+6024958,Dordrecht-Breda,1b,Gevolgen bekend,Defecte trein,2,,Tussen Dordrecht en Lage Zwaluwe is er een verstoring in de treindienst door een defecte trein.,,,2023-08-15T18:59:39,2023-08-15T20:00:00,2023-08-15T20:00:00,,,2023-08-15T19:09:25
