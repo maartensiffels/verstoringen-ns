@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   schedule:
     # Draait elke 5 minuten
-    - cron: '*/5 * * * *'
+    - cron: '*/1 * * * *'
 
 permissions: write-all
 
