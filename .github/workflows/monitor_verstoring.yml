@@ -1,6 +1,8 @@
 name: Check NS Disruptions
 
 on:
+  push:
+  workflow_dispatch:
   schedule:
     - cron: '*/5 * * * *'  
 
