@@ -2,7 +2,7 @@ name: Check NS Disruptions
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Elke uur uitvoeren
+    - cron: '*/5 * * * *'  # Elke uur uitvoeren
 
 jobs:
   check-disruptions:
