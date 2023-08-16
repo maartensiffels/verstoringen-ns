@@ -50,7 +50,7 @@ def save_to_csv(data, year):
     with open(filename, mode='a', newline='') as file:
         writer = csv.writer(file)
 
-       if not file_exists:
+        if not file_exists:
             writer.writerow(["ID", "Titel", "Fase ID", "Fase Label", "Oorzaak", "Impact", "Gevolg", "Advies", "Beschrijving", "Minimale Extra Reistijd (min.)", "Maximale Extra Reistijd (min.)", "Station Codes", "Station Namen", "Starttijd", "Geschatte Eindtijd", "Eindtijd", "Tijdstip collectie"])
 
         for item in data:
