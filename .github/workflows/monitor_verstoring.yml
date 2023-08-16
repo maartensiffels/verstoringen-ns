@@ -42,5 +42,4 @@ jobs:
         subject: NS Disruption Detected
         # Change the body as per your requirement
         body: A disruption was detected in the NS service.
-        to: your-email@example.com
-        from: sender-email@example.com
+        to: jvervaart@gld.nl
