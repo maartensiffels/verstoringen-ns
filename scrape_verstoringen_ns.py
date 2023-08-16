@@ -21,10 +21,10 @@ def save_to_csv(data, year):
         writer = csv.writer(file)
         
         if not file_exists:
-            writer.writerow(["ID", "Titel", "Fase ID", "Fase Label", "Oorzaak", "Impact", "Gevolg", "Beschrijving", "Minimale Extra Reistijd (min.)", "Maximale Extra Reistijd (min.)", "Starttijd", "Geschatte Eindtijd", "Eindtijd", "Stationscodes", "Stationsnamen", "Tijdstip collectie"])
+            writer.writerow(["ID", "Titel", "Fase ID", "Fase Label", "Oorzaak", "Impact", "Gevolg", "Beschrijving", "Minimale Extra Reistijd (min.)", "Maximale Extra Reistijd (min.)", "Station Codes", "Station Namen", "Starttijd", "Geschatte Eindtijd", "Eindtijd", "Tijdstip collectie"])
             
         for item in data:
-            writer.writerow([item["ID"], item["Titel"], item["Fase ID"], item["Fase Label"], item["Oorzaak"], item["Impact"], item["Gevolg"], item["Beschrijving"], item["Minimale Extra Reistijd"], item["Maximale Extra Reistijd"], item["Starttijd"], item["Geschatte Eindtijd"], item["Eindtijd"], item["Stationscodes"], item["Stationsnamen"], item["Tijdstip collectie"]])
+            writer.writerow([item["ID"], item["Titel"], item["Fase ID"], item["Fase Label"], item["Oorzaak"], item["Impact"], item["Gevolg"], item["Beschrijving"], item["Minimale Extra Reistijd"], item["Maximale Extra Reistijd"], item["Station Codes"], item["Station Namen"], item["Starttijd"], item["Geschatte Eindtijd"], item["Eindtijd"], item["Tijdstip collectie"]])
 
 # Stel de tijdzone in op Amsterdam (Nederland)
 amsterdam = pytz.timezone('Europe/Amsterdam')
@@ -46,17 +46,16 @@ filtered_disruptions = [
         "Beschrijving": disruption.get("timespans", [{}])[0].get("situation", {}).get("label", ""),
         "Minimale Extra Reistijd": disruption.get("summaryAdditionalTravelTime", {}).get("minimumDurationInMinutes", ""),
         "Maximale Extra Reistijd": disruption.get("summaryAdditionalTravelTime", {}).get("maximumDurationInMinutes", ""),
+        "Station Codes": ", ".join([station.get("stationCode", "") for station in disruption.get("publicationSections", [{}])[0].get("section", {}).get("stations", [])]),
+        "Station Namen": ", ".join([station.get("name", "") for station in disruption.get("publicationSections", [{}])[0].get("section", {}).get("stations", [])]),
         "Starttijd": disruption.get("start", "").replace('+0200', ''),
         "Geschatte Eindtijd": disruption.get("expectedDuration", {}).get("endTime", "").replace('+0200', ''),
         "Eindtijd": disruption.get("end", "").replace('+0200', ''),
-        "Stationscodes": ",".join([station.get("uicCode", "") for section in disruption.get("publicationSections", []) for station in section.get("stations", [])]),
-        "Stationsnamen": ",".join([station.get("name", "") for section in disruption.get("publicationSections", []) for station in section.get("stations", [])]),
         "Tijdstip collectie": formatted_time
     }
     for disruption in data if disruption.get("type") == "DISRUPTION"
 ]
 
 save_to_csv(filtered_disruptions, current_year)
-
 for item in filtered_disruptions:
-    print(f'ID: {item["ID"]}, Titel: {item["Titel"]}, Fase ID: {item["Fase ID"]}, Fase Label: {item["Fase Label"]}, Oorzaak: {item["Oorzaak"]}, Impact: {item["Impact"]}, Gevolg: {item["Gevolg"]}, Beschrijving: {item["Beschrijving"]}, Minimale Extra Reistijd: {item["Minimale Extra Reistijd"]}, Maximale Extra Reistijd: {item["Maximale Extra Reistijd"]}, Starttijd: {item["Starttijd"]}, Geschatte Eindtijd: {item["Geschatte Eindtijd"]}, Eindtijd: {item["Eindtijd"]}')
+    print(f'ID: {item["ID"]}, Titel: {item["Titel"]}, Fase ID: {item["Fase ID"]}, Fase Label: {item["Fase Label"]}, Oorzaak: {item["Oorzaak"]}, Impact: {item["Impact"]}, Gevolg: {item["Gevolg"]}, Beschrijving: {item["Beschrijving"]}, Minimale Extra Reistijd: {item["Minimale Extra Reistijd"]}, Maximale Extra Reistijd: {item["Maximale Extra Reistijd"]}, Station Codes: {item["Station Codes"]}, Station Namen: {item["Station Namen"]}, Starttijd: {item["Starttijd"]}, Geschatte Eindtijd: {item["Geschatte Eindtijd"]}, Eindtijd: {item["Eindtijd"]}, Tijdstip collectie: {item["Tijdstip collectie"]}')
