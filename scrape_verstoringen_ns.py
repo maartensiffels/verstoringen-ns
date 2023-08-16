@@ -4,6 +4,13 @@ import os
 from datetime import datetime
 import pytz
 
+def get_consequence_description(disruption):
+    publication_sections = disruption.get("publicationSections", [])
+    for section in publication_sections:
+        if "consequence" in section and "description" in section["consequence"]:
+            return section["consequence"]["description"]
+    return ""
+
 def fetch_disruptions():
     url = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v3/disruptions"
     headers = {
@@ -42,7 +49,7 @@ filtered_disruptions = [
         "Fase Label": disruption.get("phase", {}).get("label", ""),
         "Oorzaak": disruption.get("timespans", [{}])[0].get("cause", {}).get("label", ""),
         "Impact": disruption.get("impact", {}).get("value", ""),
-        "Gevolg": disruption.get("consequence", {}).get("description", ""),
+        "Gevolg": get_consequence_description(disruption),
         "Beschrijving": disruption.get("timespans", [{}])[0].get("situation", {}).get("label", ""),
         "Minimale Extra Reistijd": disruption.get("summaryAdditionalTravelTime", {}).get("minimumDurationInMinutes", ""),
         "Maximale Extra Reistijd": disruption.get("summaryAdditionalTravelTime", {}).get("maximumDurationInMinutes", ""),
