@@ -2,7 +2,7 @@
 name: Run Python script
 
 on:
-  #push:
+  push:
   workflow_dispatch:
   schedule:
     # Draait elke kwartier
