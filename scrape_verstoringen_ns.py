@@ -50,11 +50,11 @@ def save_to_csv(data, year):
     with open(filename, mode='a', newline='') as file:
         writer = csv.writer(file)
 
-        if not file_exists:
-            writer.writerow(["ID", "Titel", "Fase ID", "Fase Label", "Oorzaak", "Impact", "Gevolg", "Beschrijving", "Minimale Extra Reistijd (min.)", "Maximale Extra Reistijd (min.)", "Station Codes", "Station Namen", "Starttijd", "Geschatte Eindtijd", "Eindtijd", "Tijdstip collectie"])
+       if not file_exists:
+            writer.writerow(["ID", "Titel", "Fase ID", "Fase Label", "Oorzaak", "Impact", "Gevolg", "Advies", "Beschrijving", "Minimale Extra Reistijd (min.)", "Maximale Extra Reistijd (min.)", "Station Codes", "Station Namen", "Starttijd", "Geschatte Eindtijd", "Eindtijd", "Tijdstip collectie"])
 
         for item in data:
-            writer.writerow([item["ID"], item["Titel"], item["Fase ID"], item["Fase Label"], item["Oorzaak"], item["Impact"], item["Gevolg"], item["Beschrijving"], item["Minimale Extra Reistijd"], item["Maximale Extra Reistijd"], item["Station Codes"], item["Station Namen"], item["Starttijd"], item["Geschatte Eindtijd"], item["Eindtijd"], item["Tijdstip collectie"]])
+            writer.writerow([item["ID"], item["Titel"], item["Fase ID"], item["Fase Label"], item["Oorzaak"], item["Impact"], item["Gevolg"], item["Advies"], item["Beschrijving"], item["Minimale Extra Reistijd"], item["Maximale Extra Reistijd"], item["Station Codes"], item["Station Namen"], item["Starttijd"], item["Geschatte Eindtijd"], item["Eindtijd"], item["Tijdstip collectie"]])
 
 # Stel de tijdzone in op Amsterdam (Nederland)
 amsterdam = pytz.timezone('Europe/Amsterdam')
