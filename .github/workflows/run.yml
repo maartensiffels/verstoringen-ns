@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   schedule:
     # Draait elke kwartier
-    - cron: '00,15,30,45 * * * *'
+    - cron: '*/5 * * * *'
 
 permissions: write-all
 
