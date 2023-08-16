@@ -35,11 +35,12 @@ jobs:
       if: steps.check_disruptions.outputs.disruption == 'true'
       uses: dawidd6/action-send-mail@v3
       with:
-        server_address: smtp.yourmailserver.com
+        server_address: smtp.gmail.com
         server_port: 465
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.MAIL_PASSWORD }}
         subject: NS Disruption Detected
         # Change the body as per your requirement
         body: A disruption was detected in the NS service.
-        to: jvervaart@gld.nl
+        to: ${{ secrets.MAIL_TO }}
+        from: actions@github.com
