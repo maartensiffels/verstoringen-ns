@@ -21,17 +21,25 @@ jobs:
       id: check_disruptions
       run: |
         RESPONSE=$(curl -s -H "Ocp-Apim-Subscription-Key: ${{ secrets.YOUR_SUBSCRIPTION_KEY }}" "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v3/disruptions")
-        DISRUPTION_COUNT=$(echo $RESPONSE | jq '[.[] | select(.type == "DISRUPTION")] | length')
+        DISRUPTION_IDS=$(echo $RESPONSE | jq '.[] | select(.type == "DISRUPTION") | .id')
 
-        if [[ $DISRUPTION_COUNT -gt 0 ]]; then
-          echo "Disruptions detected."
+        NEW_DISRUPTIONS=""
+        for id in $DISRUPTION_IDS; do
+          if ! grep -q "$id" disruptions.log; then
+            NEW_DISRUPTIONS="$NEW_DISRUPTIONS $id"
+          fi
+        done
+
+        if [ -n "$NEW_DISRUPTIONS" ]; then
+          echo "New disruptions detected."
           echo "::set-output name=disruption::true"
+          echo $NEW_DISRUPTIONS >> disruptions.log
         else
-          echo "No disruptions detected."
+          echo "No new disruptions detected."
           echo "::set-output name=disruption::false"
         fi
 
-    - name: Send mail if disruptions are detected
+    - name: Send mail if new disruptions are detected
       if: steps.check_disruptions.outputs.disruption == 'true'
       uses: dawidd6/action-send-mail@v3
       with:
@@ -40,7 +48,15 @@ jobs:
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.MAIL_PASSWORD }}
         subject: NS Disruption Detected
-        # Change the body as per your requirement
-        body: A disruption was detected in the NS service.
+        body: A new disruption was detected in the NS service.
         to: ${{ secrets.MAIL_TO }}
         from: actions@github.com
+
+    - name: Commit updated disruptions log
+      if: steps.check_disruptions.outputs.disruption == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add disruptions.log
+        git commit -m "Update disruptions log"
+        git push
