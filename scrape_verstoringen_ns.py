@@ -12,7 +12,9 @@ def get_unique_station_codes(disruption):
         for station in section.get("section", {}).get("stations", []):
             station_codes.add(station["stationCode"])
 
-    return ", ".join(station_codes)
+    # Sorteer de stationscodes
+    sorted_station_codes = sorted(list(station_codes))
+    return ", ".join(sorted_station_codes)
 
 def get_unique_station_names(disruption):
     station_names = set()
@@ -22,7 +24,9 @@ def get_unique_station_names(disruption):
         for station in section.get("section", {}).get("stations", []):
             station_names.add(station["name"])
 
-    return ", ".join(station_names)
+    # Sorteer de stationsnamen
+    sorted_station_names = sorted(list(station_names))
+    return ", ".join(sorted_station_names)
 
 def get_unique_consequence_descriptions(disruption):
     descriptions = set()
