@@ -2,11 +2,12 @@
 name: Run Python script
 
 on:
-  push:
-  workflow_dispatch:
-  schedule:
+#  push:
+#  workflow_dispatch:
+
+# schedule:
     # Draait elke 5 minuten
-    - cron: '*/1 * * * *'
+ #   - cron: '*/1 * * * *'
 
 permissions: write-all
 
